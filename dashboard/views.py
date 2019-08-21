@@ -25,7 +25,7 @@ def index(request):
         "smell_sensor"  : smell_sensor,
         "soup_sensor"   : soup_sensor,
     }
-    if TissueSensor.level_tissuesensor < TissueSensor.empty_reading + 2:
+    if int(TissueSensor.level_tissuesensor) < int(TissueSensor.empty_reading) + 2:
 
                 subject = 'Alert your Tissues are about to finish'
                 message = 'Sunway Toilet 1 tissue roll is finishing. Please refill'
