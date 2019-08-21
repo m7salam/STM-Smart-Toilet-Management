@@ -1,0 +1,47 @@
+node_modules/
+dist/
+__pycache__/
+*.py[cod]
+*$py.class
+../.pytest_cache
+# When this repository is included as a
+# submodule within a buildout project,
+# buildout will dump a .egg-info directory
+# into this directory causing the submodule
+# to become "dirty", and this shows up
+# as a change to track in the parent repository.
+# Therefore, we ignore *.egg-info at the
+# repository level.
+*.egg-info
+build
+dist
+awskey
+awskey/
+Notes/
+
+# OSX
+.DS_Store
+
+#Visual_Studio
+.vscode
+
+# PyCharm
+.idea
+
+#environment
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+#Django_settings_local
+local.py
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
