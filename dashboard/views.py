@@ -25,14 +25,17 @@ def index(request):
         "smell_sensor"  : smell_sensor,
         "soup_sensor"   : soup_sensor,
     }
-    if int(TissueSensor.level_tissuesensor) < int(TissueSensor.empty_reading) + 2:
+    try:
+        if int(TissueSensor.level_tissuesensor) < int(TissueSensor.empty_reading) + 2:
 
-                subject = 'Alert your Tissues are about to finish'
-                message = 'Sunway Toilet 1 tissue roll is finishing. Please refill'
-                from_email = settings.EMAIL_HOST_USER
-                to_list = [user.email]
-                send_mail(subject, message, from_email, to_list, fail_silently=True)
-    else:
+                    subject = 'Alert your Tissues are about to finish'
+                    message = 'Sunway Toilet 1 tissue roll is finishing. Please refill'
+                    from_email = settings.EMAIL_HOST_USER
+                    to_list = [user.email]
+                    send_mail(subject, message, from_email, to_list, fail_silently=True)
+        else:
+            pass
+    except:
         pass
 
 
