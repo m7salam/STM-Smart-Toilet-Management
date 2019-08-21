@@ -94,7 +94,7 @@ DATABASES = {
             'NAME': 'stmdb',
             'USER': 'postgres',
             'PASSWORD': 'Global1234',
-            'HOST': '192.168.0.170',
+            'HOST': '192.168.0.171',
             'PORT': '5432',
     }
 }
