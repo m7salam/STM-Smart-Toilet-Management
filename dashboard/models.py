@@ -5,28 +5,30 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
-class TissueSensor(models.Model):
+class Tissuesensor(models.Model):
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, blank=True, null=True)
     initial_reading = models.CharField(max_length=255, default="3")
     empty_reading = models.CharField(max_length=255, default="8")
-    level_tissuesensor = models.CharField(max_length=255)
+    level_tissuesensor = models.CharField(max_length=255, blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
+
         db_table = 'TissueSensor'
 
     def __str__(self):
         return self.title
 
 
-class SmellSensor(models.Model):
+class Smellsensor(models.Model):
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=255)
-    level_smellsensor = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, blank=True, null=True)
+    level_smellsensor = models.CharField(max_length=255, blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True)
+
 
     class Meta:
         db_table = 'SmellSensor'
@@ -35,10 +37,10 @@ class SmellSensor(models.Model):
         return self.title
 
 
-class SoupSensor(models.Model):
+class Soupsensor(models.Model):
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, blank=True, null=True)
     initial_reading = models.CharField(max_length=255, default="4")
     empty_reading = models.CharField(max_length=255, default="12")
     level_soupsensor = models.CharField(max_length=255)
@@ -46,7 +48,6 @@ class SoupSensor(models.Model):
 
     class Meta:
         db_table = 'SoupSensor'
-
 
     def __str__(self):
         return self.title

@@ -99,7 +99,7 @@ DATABASES = {
     }
 }
 
-# Host: 192.168.0.170 #changes
+# Host: 192.168.0.171 #changes
 # Port: 5432
 # Maintenance DB: stmdb
 # Username: postgres

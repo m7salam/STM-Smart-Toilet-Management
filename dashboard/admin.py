@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import TissueSensor, SoupSensor, SmellSensor
+from .models import Tissuesensor, Soupsensor, Smellsensor
 # Register your models here.
 
 
-admin.site.register(TissueSensor)
-admin.site.register(SoupSensor)
-admin.site.register(SmellSensor)
+admin.site.register(Tissuesensor)
+admin.site.register(Soupsensor)
+admin.site.register(Smellsensor)

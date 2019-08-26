@@ -7,5 +7,6 @@ app_name = 'dashboard'
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path("data/", views.read_data, name="sensor_data"),
 
 ]
