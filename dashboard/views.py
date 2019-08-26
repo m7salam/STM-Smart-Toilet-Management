@@ -47,12 +47,41 @@ def index(request):
 
 @csrf_exempt
 def read_data(request):
-    data = request.POST
-    data_transform = (json.loads(json.dumps(request.POST)))
-    return HttpResponse(data_transform)
 
+    response=request.body.decode("utf-8")
+    json_dict = json.loads(response)
+    print(type(json_dict))
+    print(json_dict)
 
+    sensor_id = json_dict['title']
+    level = json_dict ['level_tissuesensor']
 
+    data = Tissuesensor(
+        title= sensor_id,
+        level_tissuesensor=level,
+    )
+    
+    data.save()
+    print("Successfully Saved TissueSensor Reading into the database")
+    
+    all_data = Tissuesensor.objects.all()
+
+    # print(data)
+    
+    return HttpResponse(all_data)
+    # return HttpResponse(json_dict)
+
+def show_data(request):
+    tissue_sensor = Tissuesensor.objects.all()
+
+    context = {
+        "tissue_sensor":tissue_sensor,
+
+    }
+
+    return render(request, 'data.html', context)
+
+    
 def error_404(request, exception):
     data = {}
     return render(request, '404.html', data)

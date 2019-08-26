@@ -6,7 +6,12 @@
 </head>
 <body>
 <p>
-    {{ data }}
+    {% for item in tissue_sensor %}
+
+    {{ item.title }}
+    {{ item.level_tissuesensor}}
+
+    {% endfor %}
 </p>
 </body>
 </html>

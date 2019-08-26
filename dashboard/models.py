@@ -7,7 +7,7 @@ User = get_user_model()
 
 class Tissuesensor(models.Model):
 
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE , null=True, blank=True)
     title = models.CharField(max_length=255, blank=True, null=True)
     initial_reading = models.CharField(max_length=255, default="3")
     empty_reading = models.CharField(max_length=255, default="8")
