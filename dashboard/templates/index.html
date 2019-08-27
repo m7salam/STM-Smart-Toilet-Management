@@ -81,8 +81,9 @@
                         <a class="dropdown-item" href="#">Something else here</a>
                       </div>
                     </div>
+
+                    <div class="text-value">{{percentage_tissue}} %</div>
                       {% for item in tissue_sensor %}
-                    <div class="text-value">{{item.level_tissuesensor}}</div>
                     <div>{{item.title}}</div>
                       {% endfor %}
                   </div>

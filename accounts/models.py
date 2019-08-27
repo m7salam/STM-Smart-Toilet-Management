@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
 from django.db import models
-
+from dashboard.models import Company
 
 # Create your models here.
 
@@ -27,24 +27,23 @@ class UserManager(BaseUserManager):
         user_obj.save(self._db)
         return user_obj
 
-    def create_staffuser(self, email, company=None, full_name=None, password=None):
+    def create_staffuser(self, email, full_name=None, password=None):
         user = self.create_user(
             email,
-            company=company,
             full_name=full_name,
             password=password,
             is_staff=True
         )
         return user
 
-    def create_superuser(self, email, company=None, full_name=None, password=None):
+    def create_superuser(self, email, full_name=None, password=None):
         user = self.create_user(
             email,
-            company=company,
             full_name=full_name,
             password=password,
             is_staff=True,
-            is_admin=True
+            is_admin=True,
+            is_client=True
         )
         return user
 
@@ -68,7 +67,7 @@ class User(AbstractBaseUser):
     admin               = models.BooleanField(default=False)
     client              = models.BooleanField(default=False)
     timestamp           = models.DateTimeField(auto_now_add=True)
-    company             = models.CharField(max_length=255, blank=True, null=True)
+    company             = models.ForeignKey(Company,  on_delete=models.CASCADE,null=True,blank=True)
     #confirm             = models.BooleanField(default=False)
     #confirmed_date      = models.DateTimeField(default=False)
 
@@ -76,7 +75,7 @@ class User(AbstractBaseUser):
 
     USERNAME_FIELD = 'email'  #username
     #email and password are required by default
-    REQUIRED_FIELDS = ['company']
+    REQUIRED_FIELDS = []
 
     objects = UserManager()
 
@@ -91,6 +90,8 @@ class User(AbstractBaseUser):
     def get_short_name(self):
         return self.email
 
+    def get_company(self):
+        return self.company
 
     def has_perm(self, perm, obj=None):
         return True

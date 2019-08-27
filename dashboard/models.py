@@ -1,16 +1,20 @@
 from django.db import models
-from django.contrib.auth import get_user_model
 # Create your models here.
 
-User = get_user_model()
+
+class Company(models.Model):
+    name = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Tissuesensor(models.Model):
 
-    owner = models.ForeignKey(User, on_delete=models.CASCADE , null=True, blank=True)
+    owner = models.ForeignKey(Company, on_delete=models.CASCADE, default="1")
     title = models.CharField(max_length=255, blank=True, null=True)
     initial_reading = models.CharField(max_length=255, default="3")
-    empty_reading = models.CharField(max_length=255, default="8")
+    empty_reading = models.CharField(max_length=255, default="10")
     level_tissuesensor = models.CharField(max_length=255, blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True)
 
@@ -22,9 +26,10 @@ class Tissuesensor(models.Model):
         return self.title
 
 
+
 class Smellsensor(models.Model):
 
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(Company, on_delete=models.CASCADE)
     title = models.CharField(max_length=255, blank=True, null=True)
     level_smellsensor = models.CharField(max_length=255, blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True)
@@ -39,7 +44,7 @@ class Smellsensor(models.Model):
 
 class Soupsensor(models.Model):
 
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(Company, on_delete=models.CASCADE)
     title = models.CharField(max_length=255, blank=True, null=True)
     initial_reading = models.CharField(max_length=255, default="4")
     empty_reading = models.CharField(max_length=255, default="12")
