@@ -26,6 +26,13 @@ def calculate_percentage(level, empty):
     return pretty_percentage
 
 
+def smell_quality(level):
+    if level > 1.00:
+        return "Bad"
+    else:
+        return"Good"
+
+
 @login_required(login_url='login')
 @active_user_required
 @client_required
@@ -34,17 +41,24 @@ def index(request):
     user = request.user.company
     user_email = request.user.email
     try:
-        tissue_sensor = Tissuesensor.objects.filter(owner=user)
-        smell_sensor = Smellsensor.objects.filter(owner=user)
-        soup_sensor = Soupsensor.objects.filter(owner=user)
-        obj =Tissuesensor.objects.get(owner_id=user)
+        tissue_sensor = Tissuesensor.objects.filter(owner=user).first()
+        smell_sensor = Smellsensor.objects.filter(owner=user).first()
+        soup_sensor = Soupsensor.objects.filter(owner=user).first()
+        obj =Tissuesensor.objects.get(owner_id=user).first()
+        obj_smell = Smellsensor.objects.get(ownser_id=user).first()
+        obj_soup = Soupsensor.objects.get(owner_id=user).first()
         percentage_tissue = calculate_percentage(obj.level_tissuesensor, obj.empty_reading)
+        quality_smell = smell_quality(float(obj_smell.level_smellsensor))
+        percentage_soup = calculate_percentage(obj_soup.level_soupsensor, obj_soup.empty_reading)
+        print(quality_smell)
         context = {
 
             "tissue_sensor": tissue_sensor,
             "smell_sensor": smell_sensor,
             "soup_sensor": soup_sensor,
-            "percentage_tissue": percentage_tissue
+            "percentage_tissue": percentage_tissue,
+            "quality_smell": quality_smell,
+            "percentage_soup":percentage_soup
         }
 
         return render(request, 'index.html', context)
@@ -68,7 +82,7 @@ def index(request):
 
 
 @csrf_exempt
-def read_data(request):
+def read_data_tissue(request):
 
     response = request.body.decode("utf-8")
     json_dict = json.loads(response)
@@ -87,14 +101,55 @@ def read_data(request):
     print("Successfully Saved TissueSensor Reading into the database")
     
     all_data = Tissuesensor.objects.all()
-    all_data_json = serializers.serialize('json', all_data)
 
-    # print(data)
-    
-    return HttpResponse(all_data.values(), content_type='application/json')
+    return HttpResponse("Received the POST request Successfully")
     # return HttpResponse(json_dict)
 
 
+@csrf_exempt
+def read_data_smell(request):
+    response = request.body.decode("utf-8")
+    json_dict = json.loads(response)
+    print(type(json_dict))
+    print(json_dict)
+
+    sensor_id = json_dict['title']
+    level = json_dict['level_smellsensor']
+
+    data = Smellsensor(
+        title=sensor_id,
+        level_smellsensor=level,
+    )
+
+    data.save()
+    print("Successfully Saved SmellSensor Reading into the database")
+
+    all_data = Smellsensor.objects.all()
+
+    return HttpResponse("Received the POST request Successfully")
+
+
+@csrf_exempt
+def read_data_soup(request):
+    response = request.body.decode("utf-8")
+    json_dict = json.loads(response)
+    print(type(json_dict))
+    print(json_dict)
+
+    sensor_id = json_dict['title']
+    level = json_dict['level_soupsensor']
+
+    data = Soupsensor(
+        title=sensor_id,
+        level_soupsensor=level,
+    )
+
+    data.save()
+    print("Successfully Saved SoupSensor Reading into the database")
+
+    all_data = Soupsensor.objects.all()
+
+    return HttpResponse("Received the POST request Successfully")
 
 
 def show_data(request):

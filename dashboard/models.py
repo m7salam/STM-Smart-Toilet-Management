@@ -29,7 +29,7 @@ class Tissuesensor(models.Model):
 
 class Smellsensor(models.Model):
 
-    owner = models.ForeignKey(Company, on_delete=models.CASCADE)
+    owner = models.ForeignKey(Company, on_delete=models.CASCADE, default="1")
     title = models.CharField(max_length=255, blank=True, null=True)
     level_smellsensor = models.CharField(max_length=255, blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True)
@@ -44,7 +44,7 @@ class Smellsensor(models.Model):
 
 class Soupsensor(models.Model):
 
-    owner = models.ForeignKey(Company, on_delete=models.CASCADE)
+    owner = models.ForeignKey(Company, on_delete=models.CASCADE, default="1")
     title = models.CharField(max_length=255, blank=True, null=True)
     initial_reading = models.CharField(max_length=255, default="4")
     empty_reading = models.CharField(max_length=255, default="12")
