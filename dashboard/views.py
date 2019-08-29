@@ -15,10 +15,10 @@ import requests
 # user = get_user_model()
 
 
-def calculate_percentage(level, empty):
-    full = 3
-    x = float(level) - full
-    y = float(empty) - full
+def calculate_percentage(level, empty, full):
+    # full = 3
+    x = float(level) - float(full)
+    y = float(empty) - float(full)
     x_div_y = x / y
     percentage = (1 - x_div_y) * 100
     pretty_percentage = round(percentage, 2)
@@ -37,48 +37,45 @@ def smell_quality(level):
 @active_user_required
 @client_required
 def index(request):
-
-    user = request.user.company
-    user_email = request.user.email
     try:
-        tissue_sensor = Tissuesensor.objects.filter(owner=user).first()
-        smell_sensor = Smellsensor.objects.filter(owner=user).first()
-        soup_sensor = Soupsensor.objects.filter(owner=user).first()
-        obj =Tissuesensor.objects.get(owner_id=user).first()
-        obj_smell = Smellsensor.objects.get(ownser_id=user).first()
-        obj_soup = Soupsensor.objects.get(owner_id=user).first()
-        percentage_tissue = calculate_percentage(obj.level_tissuesensor, obj.empty_reading)
+        client_id = request.user.company
+        user = request.user
+        user_email = request.user.email
+
+        obj =Tissuesensor.objects.filter(owner_id=client_id).last()
+        obj_smell = Smellsensor.objects.filter(owner_id=client_id).last()
+        obj_soup = Soupsensor.objects.filter(owner_id=client_id).last()
+
+        percentage_tissue = calculate_percentage(obj.level_tissuesensor, obj.empty_reading, obj.initial_reading)
         quality_smell = smell_quality(float(obj_smell.level_smellsensor))
-        percentage_soup = calculate_percentage(obj_soup.level_soupsensor, obj_soup.empty_reading)
-        print(quality_smell)
+        percentage_soup = calculate_percentage(obj_soup.level_soupsensor, obj_soup.empty_reading, obj_soup.initial_reading)
+
         context = {
 
-            "tissue_sensor": tissue_sensor,
-            "smell_sensor": smell_sensor,
-            "soup_sensor": soup_sensor,
+            "tissue_sensor": obj,
+            "smell_sensor": obj_smell,
+            "soup_sensor": obj_soup,
             "percentage_tissue": percentage_tissue,
             "quality_smell": quality_smell,
             "percentage_soup":percentage_soup
         }
 
+
+        # try:
+        #     if percentage_tissue <= 30.00:
+        #         subject = 'Alert your Tissues are about to finish'
+        #         message = 'Sunway Toilet 1 tissue roll is finishing. Please refill'
+        #         from_email = settings.EMAIL_HOST_USER
+        #         to_list = [user_email]
+        #         send_mail(subject, message, from_email, to_list, fail_silently=True)
+        #     else:
+        #         pass
+        # except:
+        #     pass
+
         return render(request, 'index.html', context)
     except:
-        pass
-
-    # try:
-    #     if percentage_tissue <= 30.00:
-    #         subject = 'Alert your Tissues are about to finish'
-    #         message = 'Sunway Toilet 1 tissue roll is finishing. Please refill'
-    #         from_email = settings.EMAIL_HOST_USER
-    #         to_list = [user_email]
-    #         send_mail(subject, message, from_email, to_list, fail_silently=True)
-    #     else:
-    #         pass
-    # except:
-    #     pass
-
-
-    return render(request, 'index.html', {})
+        return render(request, 'index.html', {})
 
 
 @csrf_exempt

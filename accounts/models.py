@@ -5,15 +5,15 @@ from dashboard.models import Company
 # Create your models here.
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, company, full_name=None, password=None, is_client=False,  is_active=True, is_staff=False, is_admin=False):
+    def create_user(self, email, company=None, full_name=None, password=None, is_client=False,  is_active=True, is_staff=False, is_admin=False):
         if not email:
             raise ValueError("Users must have an email address")
         if not password:
             raise ValueError("Users must have a password!")
         # if not full_name:
         #     raise ValueError("Users must have full name!")
-        if not company:
-            raise ValueError ("Client Accounts must have Company name!")
+        # if not company:
+        #     raise ValueError ("Client Accounts must have Company name!")
         user_obj = self.model(
             email = self.normalize_email(email),
             full_name = full_name,
@@ -36,9 +36,10 @@ class UserManager(BaseUserManager):
         )
         return user
 
-    def create_superuser(self, email, full_name=None, password=None):
+    def create_superuser(self,email , company=None, full_name=None, password=None):
         user = self.create_user(
             email,
+            company,
             full_name=full_name,
             password=password,
             is_staff=True,

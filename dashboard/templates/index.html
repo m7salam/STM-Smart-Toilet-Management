@@ -83,9 +83,7 @@
                     </div>
 
                     <div class="text-value">{{percentage_tissue}} %</div>
-                      {% for item in tissue_sensor %}
-                    <div>{{item.title}}</div>
-                      {% endfor %}
+                    <div>{{tissue_sensor.title}}</div>
                   </div>
                   <div class="chart-wrapper mt-3 mx-3" style="height:70px;">
                     <canvas class="chart" id="card-chart1" height="70"></canvas>
@@ -100,9 +98,7 @@
                       <i class="icon-location-pin"></i>
                     </button>
                     <div class="text-value">{{quality_smell}}</div>
-                    {% for item in smell_sensor %}
-                    <div>{{item.title}}</div>
-                      {% endfor %}
+                    <div>{{smell_sensor.title}}</div>
                   </div>
                   <div class="chart-wrapper mt-3 mx-3" style="height:70px;">
                     <canvas class="chart" id="card-chart2" height="70"></canvas>
@@ -124,10 +120,7 @@
                       </div>
                     </div>
                     <div class="text-value">{{percentage_soup}}</div>
-
-                    {% for item in soup_sensor %}
-                    <div>{{item.title}}</div>
-                      {% endfor %}
+                    <div>{{soup_sensor.title}}</div>
                   </div>
                   <div class="chart-wrapper mt-3" style="height:70px;">
                     <canvas class="chart" id="card-chart3" height="70"></canvas>
