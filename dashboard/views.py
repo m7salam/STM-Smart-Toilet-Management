@@ -7,7 +7,7 @@ from django.core.mail import send_mail
 from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from .models import Smellsensor, Tissuesensor, Soupsensor, Company
+from .models import Smellsensor, Tissuesensor, Soapsensor, Company
 import json
 import requests
 # Create your views here.
@@ -43,20 +43,20 @@ def index(request):
 
      obj =Tissuesensor.objects.filter(owner_id=client_id).last()
      obj_smell = Smellsensor.objects.filter(owner_id=client_id).last()
-     obj_soup = Soupsensor.objects.filter(owner_id=client_id).last()
+     obj_soap = Soapsensor.objects.filter(owner_id=client_id).last()
 
      percentage_tissue = calculate_percentage(obj.level_tissuesensor, obj.empty_reading, obj.initial_reading)
      quality_smell = smell_quality(float(obj_smell.level_smellsensor))
-     percentage_soup = calculate_percentage(obj_soup.level_soupsensor, obj_soup.empty_reading, obj_soup.initial_reading)
+     percentage_soap = calculate_percentage(obj_soap.level_soapsensor, obj_soap.empty_reading, obj_soap.initial_reading)
 
      context = {
 
          "tissue_sensor": obj,
          "smell_sensor": obj_smell,
-         "soup_sensor": obj_soup,
+         "soap_sensor": obj_soap,
          "percentage_tissue": percentage_tissue,
          "quality_smell": quality_smell,
-         "percentage_soup":percentage_soup
+         "percentage_soap":percentage_soap
      }
 
 
@@ -132,17 +132,17 @@ def read_data_soup(request):
     print(json_dict)
 
     sensor_id = json_dict['title']
-    level = json_dict['level_soupsensor']
+    level = json_dict['level_soapsensor']
 
-    data = Soupsensor(
+    data = Soapsensor(
         title=sensor_id,
-        level_soupsensor=level,
+        level_soapsensor=level,
     )
 
     data.save()
-    print("Successfully Saved SoupSensor Reading into the database")
+    print("Successfully Saved SoapSensor Reading into the database")
 
-    all_data = Soupsensor.objects.all()
+    all_data = Soapsensor.objects.all()
 
     return HttpResponse("Received the POST request Successfully")
 
