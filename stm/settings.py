@@ -9,12 +9,14 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
-#for gmail or google apps
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'gator4269.hostgator.com'
 EMAIL_HOST_USER = 'support@globalinfinites.com'
 EMAIL_HOST_PASSWORD = 'Gis3210%'
 EMAIL_PORT = 465
+
 
 import os
 
