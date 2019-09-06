@@ -94,10 +94,10 @@ DATABASES = {
     'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'stmdb',
-            'USER': 'postgres',
-            'PASSWORD': 'Global1234',
-            'HOST': '192.168.0.171',
-            'PORT': '5432',
+            'USER': 'stmadmin',
+            'PASSWORD': 'STM123456',
+            'HOST': 'localhost',
+            'PORT': '',
     }
 }
 
