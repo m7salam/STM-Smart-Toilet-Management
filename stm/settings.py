@@ -10,12 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'gator4269.hostgator.com'
-EMAIL_HOST_USER = 'support@globalinfinites.com'
-EMAIL_HOST_PASSWORD = 'Gis3210%'
-EMAIL_PORT = 465
 
 
 import os
@@ -158,3 +152,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
 
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = 'accounts.views.login'
+
+
+
+SEND_GRID_API_KEY='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'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'mo.salam.gis'
+EMAIL_HOST_PASSWORD = 'Global1234'
+DEFAULT_FROM_EMAIL = 'mo.salam@globalinfinites.com'
+EMAIL_PORT = 587
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

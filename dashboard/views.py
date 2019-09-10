@@ -62,19 +62,17 @@ def index(request):
         "percentage_soap": percentage_soap
     }
 
-    # try:
-    #     if percentage_tissue <= 90.00:
-    #
-    #         subject = 'Alert your Tissues are about to finish'
-    #         html_content = '<p>Sunway Toilet 1 tissue roll is finishing. Please refill</p>'
-    #         sender = settings.EMAIL_HOST_USER
-    #         recipient_list = [user_email]
-    #         # send_html_mail(subject, html_content, recipient_list, sender)
-    #         send_mail(subject, html_content, sender, recipient_list, fail_silently=True)
-    #     else:
-    #         pass
-    # except:
-    #     pass
+    try:
+        if percentage_tissue <= 90.00:
+
+            subject = 'Alert your Tissues are about to finish'
+            html_content = '<p>Sunway Toilet 1 tissue roll is finishing. Please refill</p>'
+            sender = settings.DEFAULT_FROM_EMAIL
+            recipient_list = [user_email]
+            send_html_mail(subject, html_content, recipient_list, sender)
+            # send_mail(subject, html_content, sender, recipient_list, fail_silently=True)
+    except:
+        pass
 
     return render(request, 'index.html', context)
 

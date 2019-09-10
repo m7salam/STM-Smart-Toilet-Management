@@ -1,7 +1,9 @@
 from django import forms
 from django.contrib.auth import get_user_model
+from django.conf import settings
+from django.core.mail import send_mail
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-
+from dashboard.utils import send_html_mail
 User = get_user_model()
 
 
@@ -81,5 +83,12 @@ class RegisterForm(forms.ModelForm):
         user.client = True
         if commit:
             user.save()
+            subject = 'Thank You for Signing Up with GIS'
+            html_content = '<p>Welcome to GIS</p>'
+            sender = settings.DEFAULT_FROM_EMAIL
+            recipient_list = [user.email]
+            # send_mail(subject, html_content, sender, recipient_list, fail_silently=True)
+            send_html_mail(subject, html_content, sender, recipient_list)
+
         return user
 
