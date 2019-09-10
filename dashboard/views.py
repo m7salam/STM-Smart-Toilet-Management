@@ -63,7 +63,7 @@ def index(request):
     }
 
     try:
-        if percentage_tissue <= 90.00:
+        if percentage_tissue <= 30.00:
 
             subject = 'Alert your Tissues are about to finish'
             html_content = '<p>Sunway Toilet 1 tissue roll is finishing. Please refill</p>'
