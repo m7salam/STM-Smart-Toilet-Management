@@ -2,9 +2,8 @@ from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
 from django.db import models
 from dashboard.models import Company
 
-# Create your models here.
-
 class UserManager(BaseUserManager):
+
     def create_user(self, email, company=None, full_name=None, password=None, is_client=False,  is_active=True, is_staff=False, is_admin=False):
         if not email:
             raise ValueError("Users must have an email address")

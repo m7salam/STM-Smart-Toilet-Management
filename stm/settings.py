@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 
-
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -22,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '*ad^@2wc4zwl4^seovgj3rs-kv#)ok(q52_e#l2(&dsilthsjh'
+SECRET_KEY = os.environ.get('STM_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -87,11 +86,11 @@ WSGI_APPLICATION = 'stm.wsgi.application'
 DATABASES = {
     'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'stmdb',
-            'USER': 'stmadmin',
-            'PASSWORD': 'STM123456',
-            'HOST': 'localhost',
-            'PORT': '',
+            'NAME': os.environ.get('STM_DB_NAME'),
+            'USER': os.environ.get('STM_DB_USER'),
+            'PASSWORD': os.environ.get('STM_DB_PASS'),
+            'HOST': os.environ.get('STM_DB_HOST'),
+            'PORT': os.environ.get('STM_DB_PORT'),
     }
 }
 
@@ -155,11 +154,13 @@ LOGIN_URL = 'accounts.views.login'
 
 
 
-SEND_GRID_API_KEY='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'
+SEND_GRID_API_KEY= os.environ.get('STM_SEND_GRID_API')
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_HOST_USER = 'mo.salam.gis'
-EMAIL_HOST_PASSWORD = 'Global1234'
+EMAIL_HOST_PASSWORD = os.environ.get('STM_EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = 'mo.salam@globalinfinites.com'
 EMAIL_PORT = 587
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# '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'

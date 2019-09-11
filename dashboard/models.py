@@ -8,6 +8,7 @@ class Company(models.Model):
     def __str__(self):
         return self.name
 
+
 class Tissuesensor(models.Model):
 
     owner = models.ForeignKey(Company, on_delete=models.CASCADE, default="1")
@@ -23,7 +24,6 @@ class Tissuesensor(models.Model):
 
     def __str__(self):
         return self.title
-
 
 
 class Smellsensor(models.Model):
