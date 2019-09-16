@@ -15,7 +15,7 @@ class Tissuesensor(models.Model):
     title = models.CharField(max_length=255, blank=True, null=True)
     initial_reading = models.CharField(max_length=255, default="3")
     empty_reading = models.CharField(max_length=255, default="10")
-    level_tissuesensor = models.CharField(max_length=255, blank=True, null=True)
+    level_tissuesensor = models.CharField(max_length=255, blank=True, null=True, default="3")
     date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -30,7 +30,7 @@ class Smellsensor(models.Model):
 
     owner = models.ForeignKey(Company, on_delete=models.CASCADE, default="1")
     title = models.CharField(max_length=255, blank=True, null=True)
-    level_smellsensor = models.CharField(max_length=255, blank=True, null=True)
+    level_smellsensor = models.CharField(max_length=255, blank=True, null=True, default="0.50")
     date = models.DateTimeField(auto_now_add=True)
 
 
@@ -47,7 +47,7 @@ class Soapsensor(models.Model):
     title = models.CharField(max_length=255, blank=True, null=True)
     initial_reading = models.CharField(max_length=255, default="4")
     empty_reading = models.CharField(max_length=255, default="12")
-    level_soapsensor = models.CharField(max_length=255)
+    level_soapsensor = models.CharField(max_length=255, default="4")
     date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
