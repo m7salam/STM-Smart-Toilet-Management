@@ -138,7 +138,7 @@ def read_data_soup(request):
 
     sensor_id = json_dict['title']
     level = json_dict['level_soapsensor']
-    if float(level) < 4.00 or float(level) > 12.00:
+    if float(level) < 1.00 or float(level) > 12.00:
         pass
     else:
 
