@@ -26,7 +26,7 @@ def calculate_percentage(level, empty, full):
 
 
 def smell_quality(level):
-    if level > 1.00:
+    if level > 1.70:
         return "Bad"
     else:
         return "Good"
