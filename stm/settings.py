@@ -156,13 +156,19 @@ LOGIN_URL = 'accounts.views.login'
 
 
 
-SEND_GRID_API_KEY= os.environ.get('STM_SEND_GRID_API')
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'mo.salam.gis'
-EMAIL_HOST_PASSWORD = os.environ.get('STM_EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = 'mo.salam@globalinfinites.com'
-EMAIL_PORT = 587
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# SEND_GRID_API_KEY= os.environ.get('STM_SEND_GRID_API')
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.sendgrid.net'
+# EMAIL_HOST_USER = 'mo.salam.gis'
+# EMAIL_HOST_PASSWORD = os.environ.get('STM_EMAIL_HOST_PASSWORD')
+# DEFAULT_FROM_EMAIL = 'mo.salam@globalinfinites.com'
+# EMAIL_PORT = 587
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-# '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'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'gator4269.hostgator.com'
+EMAIL_HOST_USER = 'support@globalinfinites.com'
+EMAIL_HOST_PASSWORD = os.environ.get('STM_EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = 'support@globalinfinites.com'
+EMAIL_PORT = 26
