@@ -45,7 +45,7 @@ class Soapsensor(models.Model):
 
     owner = models.ForeignKey(Company, on_delete=models.CASCADE, default="1")
     title = models.CharField(max_length=255, blank=True, null=True)
-    initial_reading = models.CharField(max_length=255, default="4")
+    initial_reading = models.CharField(max_length=255, default="1")
     empty_reading = models.CharField(max_length=255, default="12")
     level_soapsensor = models.CharField(max_length=255)
     date = models.DateTimeField(auto_now_add=True)
