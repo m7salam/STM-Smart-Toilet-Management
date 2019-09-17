@@ -4,6 +4,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from dashboard.utils import send_html_mail
+from dashboard.models import Company
 User = get_user_model()
 
 
@@ -29,6 +30,7 @@ class UserAdminCreationForm(forms.ModelForm):
         # Save the provided password in hashed format
         user = super(UserAdminCreationForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password1"])
+
         if commit:
             user.save()
         return user
@@ -81,7 +83,8 @@ class RegisterForm(forms.ModelForm):
         user.set_password(self.cleaned_data["password1"])
         user.active = True # send confirmation email
         user.client = True
-
+        company_id = Company.objects.get(pk=1)
+        user.company = company_id
         if commit:
             user.save()
             subject = 'Thank You for Signing Up with GIS'
