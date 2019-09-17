@@ -81,6 +81,7 @@ class RegisterForm(forms.ModelForm):
         user.set_password(self.cleaned_data["password1"])
         user.active = True # send confirmation email
         user.client = True
+
         if commit:
             user.save()
             subject = 'Thank You for Signing Up with GIS'

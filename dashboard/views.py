@@ -1,16 +1,12 @@
-from django.core import serializers
 from django.shortcuts import render, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse, HttpResponseServerError, HttpResponseRedirect
 from accounts.decorators import client_required, active_user_required
-from django.core.mail import send_mail
-from django.contrib.auth import get_user_model
+# from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from .models import Smellsensor, Tissuesensor, Soapsensor, Company
 import json
 from .utils import send_html_mail
-import requests
 
 
 # Create your views here.
@@ -47,7 +43,6 @@ def index(request):
     obj = Tissuesensor.objects.filter(owner_id=client_id).last()
     obj_smell = Smellsensor.objects.filter(owner_id=client_id).last()
     obj_soap = Soapsensor.objects.filter(owner_id=client_id).last()
-
     percentage_tissue = calculate_percentage(obj.level_tissuesensor, obj.empty_reading, obj.initial_reading)
     quality_smell = smell_quality(float(obj_smell.level_smellsensor))
     percentage_soap = calculate_percentage(obj_soap.level_soapsensor, obj_soap.empty_reading, obj_soap.initial_reading)
@@ -87,15 +82,16 @@ def read_data_tissue(request):
     sensor_id = json_dict['title']
     level = json_dict['level_tissuesensor']
 
-    data = Tissuesensor(
-        title=sensor_id,
-        level_tissuesensor=level,
-    )
+    if level < 3.00 or level > 10.00:
+        pass
+    else:
+        data = Tissuesensor(
+            title=sensor_id,
+            level_tissuesensor=level,
+        )
 
-    data.save()
-    print("Successfully Saved TissueSensor Reading into the database")
-
-    all_data = Tissuesensor.objects.all()
+        data.save()
+        print("Successfully Saved TissueSensor Reading into the database")
 
     return HttpResponse("Received the POST request Successfully")
     # return HttpResponse(json_dict)
@@ -119,8 +115,6 @@ def read_data_smell(request):
     data.save()
     print("Successfully Saved SmellSensor Reading into the database")
 
-    all_data = Smellsensor.objects.all()
-
     return HttpResponse("Received the POST request Successfully")
 
 
@@ -133,16 +127,17 @@ def read_data_soup(request):
 
     sensor_id = json_dict['title']
     level = json_dict['level_soapsensor']
+    if level < 4.00 or level > 12.00:
+        pass
+    else:
 
-    data = Soapsensor(
-        title=sensor_id,
-        level_soapsensor=level,
-    )
+        data = Soapsensor(
+            title=sensor_id,
+            level_soapsensor=level,
+        )
 
-    data.save()
-    print("Successfully Saved SoapSensor Reading into the database")
-
-    all_data = Soapsensor.objects.all()
+        data.save()
+        print("Successfully Saved SoapSensor Reading into the database")
 
     return HttpResponse("Received the POST request Successfully")
 

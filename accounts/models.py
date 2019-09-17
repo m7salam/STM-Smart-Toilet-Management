@@ -67,7 +67,7 @@ class User(AbstractBaseUser):
     admin               = models.BooleanField(default=False)
     client              = models.BooleanField(default=False)
     timestamp           = models.DateTimeField(auto_now_add=True)
-    company             = models.ForeignKey(Company,  on_delete=models.CASCADE,null=True,blank=True)
+    company             = models.ForeignKey(Company, on_delete=models.CASCADE, null=True, blank=True)
     #confirm             = models.BooleanField(default=False)
     #confirmed_date      = models.DateTimeField(default=False)
 
