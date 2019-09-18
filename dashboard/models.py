@@ -14,7 +14,7 @@ class Tissuesensor(models.Model):
     owner = models.ForeignKey(Company, on_delete=models.CASCADE, default="1")
     title = models.CharField(max_length=255, blank=True, null=True)
     initial_reading = models.CharField(max_length=255, default="3")
-    empty_reading = models.CharField(max_length=255, default="10")
+    empty_reading = models.CharField(max_length=255, default="8")
     level_tissuesensor = models.CharField(max_length=255, blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True)
 

@@ -93,7 +93,7 @@ def read_data_tissue(request):
     sensor_id = json_dict['title']
     level = json_dict['level_tissuesensor']
 
-    if float(level) < 3.00 or float(level) > 10.00:
+    if float(level) < 3.00 or float(level) > 8.00:
         pass
     else:
         data = Tissuesensor(
