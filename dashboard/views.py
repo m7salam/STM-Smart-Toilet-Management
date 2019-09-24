@@ -6,30 +6,13 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from .models import Smellsensor, Tissuesensor, Soapsensor, Company
 import json
-from .utils import send_html_mail
+from .utils import send_html_mail, calculate_percentage, smell_quality
 
 
 # Create your views here.
 
 # user = get_user_model()
 
-
-def calculate_percentage(level, empty, full):
-    # full = 3
-    x = float(level) - float(full)
-    y = float(empty) - float(full)
-    x_div_y = x / y
-    percentage = (1 - x_div_y) * 100
-    pretty_percentage = round(percentage, 2)
-
-    return pretty_percentage
-
-
-def smell_quality(level):
-    if level > 1.70:
-        return "Bad"
-    else:
-        return "Good"
 
 
 @login_required(login_url='login')
@@ -47,6 +30,7 @@ def index(request):
     quality_smell = smell_quality(float(obj_smell.level_smellsensor))
     percentage_soap = calculate_percentage(obj_soap.level_soapsensor, obj_soap.empty_reading, obj_soap.initial_reading)
 
+
     context = {
 
         "tissue_sensor": obj,
@@ -54,7 +38,8 @@ def index(request):
         "soap_sensor": obj_soap,
         "percentage_tissue": percentage_tissue,
         "quality_smell": quality_smell,
-        "percentage_soap": percentage_soap
+        "percentage_soap": percentage_soap,
+
     }
 
     try:
@@ -163,6 +148,12 @@ def show_data(request):
 
     return render(request, 'data.html', context)
 
+# def update_data(request):
+#     tissue =
+#     smell =
+#     soap =
+
+    return HttpResponse('success')
 
 def error_404(request, exception):
     data = {}

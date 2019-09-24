@@ -5,6 +5,8 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from .forms import UserAdminCreationForm, UserAdminChangeForm
 from dashboard.models import Company
+from .models import Email
+
 
 User = get_user_model()
 
@@ -39,7 +41,7 @@ class UserAdmin(BaseUserAdmin):
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Company)
-
+admin.site.register(Email)
 
 # Remove Group Model from admin. We're not using it.
 admin.site.unregister(Group)

@@ -18,3 +18,21 @@ class EmailThread(threading.Thread):
 
 def send_html_mail(subject, html_content, recipient_list, sender):
     EmailThread(subject, html_content, recipient_list, sender).start()
+
+
+def calculate_percentage(level, empty, full):
+    # full = 3
+    x = float(level) - float(full)
+    y = float(empty) - float(full)
+    x_div_y = x / y
+    percentage = (1 - x_div_y) * 100
+    pretty_percentage = round(percentage, 2)
+
+    return pretty_percentage
+
+
+def smell_quality(level):
+    if level > 1.70:
+        return "Bad"
+    else:
+        return "Good"

@@ -135,11 +135,35 @@
                   <div class="h1 text-muted text-right mb-4">
                     <i class="fas fa-toilet-paper"></i>
                   </div>
-                  <div class="text-value">{{percentage_tissue}} %</div>
+                  {% if tissue_sensor.level_tissuesensor <= 3 or tissue_sensor.level_tissuesensor >= 10 %}
+                  <div class="text-value"> 100 %</div>
+                  <small class="text-muted text-uppercase font-weight-bold">{{tissue_sensor.title}}</small>
+                  <div class="progress progress-xs mt-3 mb-0">
+                    <div class="progress-bar bg-info" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+
+                    {% elif tissue_sensor.level_tissuesensor == 4 %}
+                   <div class="text-value"> 80 %</div>
+                  <small class="text-muted text-uppercase font-weight-bold">{{tissue_sensor.title}}</small>
+                  <div class="progress progress-xs mt-3 mb-0">
+                    <div class="progress-bar bg-info" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+
+                  {%elif tissue_sensor.level_tissuesensor == 8 or tissue_sensor.level_tissuesensor == 9%}
+
+                  <div class="text-value"> 0 %</div>
+                  <small class="text-muted text-uppercase font-weight-bold">{{tissue_sensor.title}}</small>
+                  <div class="progress progress-xs mt-3 mb-0">
+                    <div class="progress-bar bg-info" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                    {% else %}
+                   <div class="text-value">{{percentage_tissue}} %</div>
                   <small class="text-muted text-uppercase font-weight-bold">{{tissue_sensor.title}}</small>
                   <div class="progress progress-xs mt-3 mb-0">
                     <div class="progress-bar bg-info" role="progressbar" style="width: {{percentage_tissue}}%" aria-valuenow="{{percentage_tissue}}" aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
+                  {%endif%}
+
                 </div>
               </div>
               <div class="card">

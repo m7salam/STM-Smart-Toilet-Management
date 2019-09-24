@@ -117,7 +117,12 @@ class User(AbstractBaseUser):
         return self.client
 
 
+class Email(models.Model):
+    email = models.EmailField(max_length=255)
+    threshold = models.IntegerField()
 
+    def __str__(self):
+        return self.email
 
 
 
