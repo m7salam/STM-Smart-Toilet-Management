@@ -78,16 +78,13 @@ def read_data_tissue(request):
     sensor_id = json_dict['title']
     level = json_dict['level_tissuesensor']
 
-    if float(level) < 3.00 or float(level) > 8.00:
-        pass
-    else:
-        data = Tissuesensor(
-            title=sensor_id,
-            level_tissuesensor=level,
-        )
+    data = Tissuesensor(
+        title=sensor_id,
+        level_tissuesensor=level,
+    )
 
-        data.save()
-        print("Successfully Saved TissueSensor Reading into the database")
+    data.save()
+    print("Successfully Saved TissueSensor Reading into the database")
 
     return HttpResponse("Received the POST request Successfully")
     # return HttpResponse(json_dict)
@@ -123,17 +120,14 @@ def read_data_soup(request):
 
     sensor_id = json_dict['title']
     level = json_dict['level_soapsensor']
-    if float(level) < 1.00 or float(level) > 12.00:
-        pass
-    else:
 
-        data = Soapsensor(
-            title=sensor_id,
-            level_soapsensor=level,
-        )
+    data = Soapsensor(
+        title=sensor_id,
+        level_soapsensor=level,
+    )
 
-        data.save()
-        print("Successfully Saved SoapSensor Reading into the database")
+    data.save()
+    print("Successfully Saved SoapSensor Reading into the database")
 
     return HttpResponse("Received the POST request Successfully")
 
