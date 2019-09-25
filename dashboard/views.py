@@ -4,15 +4,16 @@ from accounts.decorators import client_required, active_user_required
 # from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from rest_framework.generics import ListAPIView, RetrieveAPIView
 from .models import Smellsensor, Tissuesensor, Soapsensor
 import json
 from .utils import send_html_mail, calculate_percentage, smell_quality
+from .serializers import SmellsensorSerializer, TissuesensorSerializer, SoapsensorSerializer
 
 
 # Create your views here.
 
 # user = get_user_model()
-
 
 
 @login_required(login_url='login')
@@ -68,6 +69,30 @@ def index(request):
         pass
 
     return render(request, 'index.html', context)
+
+
+def update_data(request):
+    client_id = request.user.company
+    obj = Tissuesensor.objects.filter(owner_id=client_id).last()
+    float_tissuelevel = float(obj.level_tissuesensor)
+    obj_smell = Smellsensor.objects.filter(owner_id=client_id).last()
+    obj_soap = Soapsensor.objects.filter(owner_id=client_id).last()
+    percentage_tissue = calculate_percentage(obj.level_tissuesensor, obj.empty_reading, obj.initial_reading)
+    quality_smell = smell_quality(float(obj_smell.level_smellsensor))
+    percentage_soap = calculate_percentage(obj_soap.level_soapsensor, obj_soap.empty_reading, obj_soap.initial_reading)
+
+    context = {
+
+    "tissue_sensor": obj,
+    "smell_sensor": obj_smell,
+    "soap_sensor": obj_soap,
+    "percentage_tissue": percentage_tissue,
+    "quality_smell": quality_smell,
+    "percentage_soap": percentage_soap,
+    "float_tissuelevel" : float_tissuelevel,
+
+    }
+    return render(request, 'sensor_data.html', context)
 
 
 @csrf_exempt
@@ -144,12 +169,6 @@ def show_data(request):
 
     return render(request, 'data.html', context)
 
-# def update_data(request):
-#     tissue =
-#     smell =
-#     soap =
-
-    return HttpResponse('success')
 
 def error_404(request, exception):
     data = {}
@@ -159,3 +178,25 @@ def error_404(request, exception):
 def error_500(request):
     data = {}
     return render(request, '500.html', data)
+
+
+#########################
+### API views ###
+#########################
+
+class TissuesensorAPIView(ListAPIView):
+    queryset = Tissuesensor.objects.all()
+    serializer_class = TissuesensorSerializer
+    lookup_field = 'owner_id'
+
+
+class SmellsensorAPIView(ListAPIView):
+    queryset = Smellsensor.objects.all()
+    serializer_class = SmellsensorSerializer
+    lookup_field = 'owner_id'
+
+
+class SoapsensorAPIView(ListAPIView):
+    queryset = Smellsensor.objects.all()
+    serializer_class = SoapsensorSerializer
+    lookup_field = 'owner_id'

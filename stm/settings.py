@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #third_party
+    'rest_framework',
+
     #local_apps
     'accounts',
     'dashboard',
@@ -172,3 +175,9 @@ EMAIL_HOST_USER = 'support@globalinfinites.com'
 EMAIL_HOST_PASSWORD = os.environ.get('STM_EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = 'support@globalinfinites.com'
 EMAIL_PORT = 26
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
