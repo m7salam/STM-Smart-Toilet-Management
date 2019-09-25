@@ -4,7 +4,7 @@ from accounts.decorators import client_required, active_user_required
 # from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from .models import Smellsensor, Tissuesensor, Soapsensor, Company
+from .models import Smellsensor, Tissuesensor, Soapsensor
 import json
 from .utils import send_html_mail, calculate_percentage, smell_quality
 
@@ -24,6 +24,7 @@ def index(request):
     user_email = request.user.email
 
     obj = Tissuesensor.objects.filter(owner_id=client_id).last()
+    float_tissuelevel = float(obj.level_tissuesensor)
     obj_smell = Smellsensor.objects.filter(owner_id=client_id).last()
     obj_soap = Soapsensor.objects.filter(owner_id=client_id).last()
     percentage_tissue = calculate_percentage(obj.level_tissuesensor, obj.empty_reading, obj.initial_reading)
@@ -39,6 +40,7 @@ def index(request):
         "percentage_tissue": percentage_tissue,
         "quality_smell": quality_smell,
         "percentage_soap": percentage_soap,
+        "float_tissuelevel" : float_tissuelevel,
 
     }
 
